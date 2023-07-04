@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { imgs } from '../data';
 import Card from './Card';
 import { Modal } from './Modal';
-import { MdOutlineMoveDown } from 'react-icons/md';
+
 
 // * Funcion para desorganizar el arreglo que contiene las imagenes (aleatoriamente)
 const shuffleArr = arr => {
