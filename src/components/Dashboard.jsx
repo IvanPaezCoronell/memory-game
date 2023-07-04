@@ -33,7 +33,7 @@ const Dashboard = () => {
 
 		const newCards = shuffleArr(duplicateCard); // --> Duplicar cartas
 
-    // * Agregar una nueva carta
+		// * Agregar una nueva carta
 		const cards = newCards.map(card => {
 			return {
 				...card,
@@ -49,12 +49,80 @@ const Dashboard = () => {
 		createDashboard();
 	}, []);
 
+	// * Funcion para la accion de voltear carta
+	const handleCardClick = id => {
+		if (isDisabled) return;
+
+		// * Filtrar carta (Obtiene el id de la carta actual)
+		const [currentCard] = cards.filter(card => card.id === id);
+
+		if (!currentCard.flipped && !currentCard.matched) {
+			currentCard.flipped = true;
+			const newFlippedCard = [...flippedCards, currentCard];
+
+			// * Se agrega al estado la carta volteada
+			setFlippedCards(newFlippedCard);
+
+			if (newFlippedCard.length === 2) {
+				setisDisabled(true);
+				const [firstCard, secondCard] = newFlippedCard;
+
+				if (firstCard.img === secondCard.img) {
+					firstCard.matched = true;
+					secondCard.matched = true;
+					setisDisabled(false);
+				} else {
+					setTimeout(() => {
+						firstCard.flipped = false;
+						secondCard.flipped = false;
+						setCards(cards);
+						setisDisabled(false);
+					}, 100);
+				}
+
+				setFlippedCards([]);
+				setMoves(moves + 1);
+			}
+
+			setCards(cards);
+		}
+
+		// * Comprobar si todas las cartas tienen un matched
+		if (cards.every(card => card.matched)) {
+			setGameOver(true);
+			setisDisabled(true);
+		}
+	};
+
+	const handleNewGame = () => {
+		setCards([]);
+		createDashboard();
+		setMoves(0);
+		setGameOver(false);
+		setisDisabled(false);
+	};
+
 	return (
 		<div className="realitve h-screen flex items-center">
-			<h1 className="font-bold text-4xl">Memory Game</h1>
+			<div className="mx-auto flex flex-col justify-center items-center">
+				<h1 className="font-bold text-4xl">Memory Game</h1>
 
-			<div className="text-red-500 grid grid-cols-4 gap-3 justify-center items-center px-3 py-5 my-3">
-				{cards.map(card => <Card card={card} key={card.id} />)}
+				<div className="text-red-500 grid grid-cols-4 gap-3 justify-center items-center px-3 py-5 my-3">
+					{cards.map(card =>
+						<Card
+							card={card}
+							key={card.id}
+							handleCardClick={handleCardClick}
+						/>,
+					)}
+				</div>
+
+				<button
+					className="bg-blue-500 font-semiboild text-white rounded-md px-5 py-5 hover:bg-blue-300 transition-all mb-3"
+					onClick={handleNewGame}
+				>
+					Nuevo Juego
+				</button>
 			</div>
 		</div>
 	);

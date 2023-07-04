@@ -1,9 +1,10 @@
-const Card = ({ card }) => {
+const Card = ({ card, handleCardClick }) => {
 	return (
 		<div
 			className={`${card.flipped
 				? '[transform:rotateY(10deg)]'
 				: 'bg-white'} drop-shadow-md flex items-center justify-center cursor-pointer h-16 hover:scale-90 rounded-xl transition-all duration-100 p-12`}
+			onClick={() => handleCardClick(card.id)}
 		>
 			<div>
 				<img
