@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { imgs } from '../data';
 import Card from './Card';
+import { Modal } from './Modal';
 
 // * Funcion para desorganizar el arreglo que contiene las imagenes (aleatoriamente)
 const shuffleArr = arr => {
@@ -103,26 +104,45 @@ const Dashboard = () => {
 	};
 
 	return (
-		<div className="realitve h-screen flex items-center">
-			<div className="mx-auto flex flex-col justify-center items-center">
-				<h1 className="font-bold text-4xl">Memory Game</h1>
+		<div>
+			{gameOver
+				? <div className="fixed inset-0 bg-black opacity-50 z-10" />
+				: ''}
 
-				<div className="text-red-500 grid grid-cols-4 gap-3 justify-center items-center px-3 py-5 my-3">
-					{cards.map(card =>
-						<Card
-							card={card}
-							key={card.id}
-							handleCardClick={handleCardClick}
-						/>,
-					)}
+			<div className="realitve h-screen flex items-center">
+				<div className="mx-auto flex flex-col justify-center items-center">
+					<h1 className="font-bold text-4xl">Memory Game</h1>
+					<div className="flex justify-between gap-2 pt-12">
+						<p className="text-white">Movimientos:</p>
+						<p className="text-white font-bold">
+							{moves}
+						</p>
+					</div>
+
+					<div className="text-red-500 grid grid-cols-4 gap-3 justify-center items-center px-3 py-5 my-3">
+						{cards.map(card =>
+							<Card
+								card={card}
+								key={card.id}
+								handleCardClick={handleCardClick}
+							/>,
+						)}
+					</div>
+
+					<button
+						className="bg-blue-500 font-semiboild text-white rounded-md px-5 py-5 hover:bg-blue-300 transition-all mb-3"
+						onClick={handleNewGame}
+					>
+						Nuevo Juego
+					</button>
 				</div>
 
-				<button
-					className="bg-blue-500 font-semiboild text-white rounded-md px-5 py-5 hover:bg-blue-300 transition-all mb-3"
-					onClick={handleNewGame}
-				>
-					Nuevo Juego
-				</button>
+				<Modal
+					gameOver={gameOver}
+					setGameOver={setGameOver}
+					moves={moves}
+					handleNewGame={handleNewGame}
+				/>
 			</div>
 		</div>
 	);
