@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { imgs } from '../data';
 import Card from './Card';
 import { Modal } from './Modal';
+import { MdOutlineMoveDown } from 'react-icons/md';
 
 // * Funcion para desorganizar el arreglo que contiene las imagenes (aleatoriamente)
 const shuffleArr = arr => {
@@ -111,12 +112,27 @@ const Dashboard = () => {
 
 			<div className="realitve h-screen flex items-center">
 				<div className="mx-auto flex flex-col justify-center items-center">
-					<h1 className="font-bold text-4xl">Memory Game</h1>
-					<div className="flex justify-between gap-2 pt-12">
-						<p className="text-white">Movimientos:</p>
-						<p className="text-white font-bold">
+					<div className="flex shadow-md gap-6 rounded-lg overflow-hidden divide-x max-w-2xl bg-gray-900 text-gray-100 divide-gray-700">
+						<div className="flex flex-1 flex-col p-4 border-l-8 border-blue-400">
+							<span className="text-6xl tracki font-bold ">Memory Game </span>
+						</div>
+						<span className="p-8 flex items-center uppercase tracki text-white text-xl font-bold border-gray-700">
+							<button
+								className="bg-blue-500 font-semiboild text-white rounded-md px-2 py-2 hover:bg-blue-300 transition-all mb-3"
+								onClick={handleNewGame}
+							>
+								Nuevo Juego 🎮
+							</button>{' '}
+						</span>
+					</div>
+
+					<div className="flex items-center justify-between  max-w-sm p-3 mt-5 space-x-4 rounded-md bg-gray-900 text-gray-100">
+						<span className="font-bold">
 							{moves}
-						</p>
+						</span>
+						<div className="flex flex-col flex-1 px-2 ">
+							<span className="text-sm font-semibold">Movimientos</span>
+						</div>
 					</div>
 
 					<div className="text-red-500 grid grid-cols-4 gap-3 justify-center items-center px-3 py-5 my-3">
@@ -128,13 +144,6 @@ const Dashboard = () => {
 							/>,
 						)}
 					</div>
-
-					<button
-						className="bg-blue-500 font-semiboild text-white rounded-md px-5 py-5 hover:bg-blue-300 transition-all mb-3"
-						onClick={handleNewGame}
-					>
-						Nuevo Juego
-					</button>
 				</div>
 
 				<Modal
