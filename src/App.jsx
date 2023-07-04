@@ -1,11 +1,11 @@
 import './App.css';
+import Dashboard from './components/dashboard';
+
 
 function App() {
 	return (
 		<div>
-			<h1 className="text-3xl font-bold">
-				Memory Game
-			</h1>
+			<Dashboard />
 		</div>
 	);
 }
